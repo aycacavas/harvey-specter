@@ -1,9 +1,25 @@
+import HeroSection from "@/components/HeroSection";
+import AboutSection from "@/components/AboutSection";
+import BioSection from "@/components/BioSection";
+import PhotoSection from "@/components/PhotoSection";
+import ServicesSection from "@/components/ServicesSection";
+import WorkSection from "@/components/WorkSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import LatestNewsSection from "@/components/LatestNewsSection";
+import Footer from "@/components/Footer";
+
 export default function Home() {
   return (
-    <main className="flex items-center justify-center min-h-screen bg-black">
-      <h1 className="text-yellow-400 text-6xl font-bold tracking-widest uppercase font-[var(--font-dm-sans)]">
-        Harvey Specter
-      </h1>
+    <main>
+      <HeroSection />
+      <AboutSection />
+      <BioSection />
+      <PhotoSection />
+      <ServicesSection />
+      <WorkSection />
+      <TestimonialsSection />
+      <LatestNewsSection />
+      <Footer />
     </main>
   );
 }
