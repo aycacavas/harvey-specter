@@ -1,27 +1,16 @@
 import Image from "next/image";
+import { sanityFetch } from "@/sanity/lib/live";
+import { portfolioQuery } from "@/sanity/queries";
+import { urlFor } from "@/sanity/lib/image";
 
-const projects = [
-  {
-    title: "Surfers Paradise",
-    tags: ["Social Media", "Photography"],
-    image: "/work-1.jpg",
-  },
-  {
-    title: "Cyberpunk Caffe",
-    tags: ["Social Media", "Photography"],
-    image: "/work-2.jpg",
-  },
-  {
-    title: "Agency 976",
-    tags: ["Social Media", "Photography"],
-    image: "/work-3.jpg",
-  },
-  {
-    title: "Minimal Playground",
-    tags: ["Social Media", "Photography"],
-    image: "/work-4.jpg",
-  },
-];
+type PortfolioItem = {
+  _id: string;
+  title: string;
+  slug?: { current: string } | null;
+  tags?: string[] | null;
+  coverImage?: { asset?: { _ref: string } } | null;
+  order?: number | null;
+};
 
 function ArrowIcon() {
   return (
@@ -50,25 +39,32 @@ function CornerBracket({ className }: { className?: string }) {
   );
 }
 
-function ProjectCard({ title, tags, image, tall }: {
-  title: string;
-  tags: string[];
-  image: string;
+function getImageSrc(item: PortfolioItem, index: number): string {
+  if (item.coverImage?.asset?._ref) {
+    return urlFor(item.coverImage).width(900).url();
+  }
+  return `/work-${index + 1}.jpg`;
+}
+
+function ProjectCard({ item, index, tall }: {
+  item: PortfolioItem;
+  index: number;
   tall?: boolean;
 }) {
+  const src = getImageSrc(item, index);
   return (
     <div className="flex flex-col gap-[10px]">
       <div className={`relative w-full overflow-hidden ${tall ? "h-[744px]" : "h-[699px]"}`}>
-        <Image src={image} alt={title} fill className="object-cover" />
+        <Image src={src} alt={item.title} fill className="object-cover" />
         <div className="absolute bottom-4 left-4 flex gap-3">
-          {tags.map((tag) => (
+          {item.tags?.map((tag) => (
             <Tag key={tag} label={tag} />
           ))}
         </div>
       </div>
       <div className="flex items-center justify-between">
         <p className="font-black text-[36px] text-black uppercase leading-[1.1] tracking-[-0.04em]">
-          {title}
+          {item.title}
         </p>
         <ArrowIcon />
       </div>
@@ -76,13 +72,14 @@ function ProjectCard({ title, tags, image, tall }: {
   );
 }
 
-export default function WorkSection() {
+export default async function WorkSection() {
+  const { data: projects } = await sanityFetch({ query: portfolioQuery });
+
   return (
     <section id="projects" className="px-4 md:px-8 py-12 md:py-20">
 
       {/* Header */}
       <div className="mb-10 md:mb-[61px]">
-        {/* [ PORTFOLIO ] — mobile only, above heading */}
         <span className="md:hidden block font-mono text-sm text-[#1f1f1f] uppercase mb-4">
           [ Portfolio ]
         </span>
@@ -93,11 +90,9 @@ export default function WorkSection() {
               <p>Selected</p>
               <p>Work</p>
             </div>
-            {/* 004 — desktop only, next to heading */}
             <span className="hidden md:inline font-mono text-sm text-[#1f1f1f] uppercase mt-1">004</span>
           </div>
 
-          {/* mobile: 004 far right; desktop: [ portfolio ] vertical */}
           <div>
             <span className="md:hidden font-mono text-sm text-[#1f1f1f] uppercase">004</span>
             <div className="hidden md:flex items-center justify-center w-[15px] h-[110px]">
@@ -114,12 +109,12 @@ export default function WorkSection() {
 
       {/* Mobile — stacked */}
       <div className="md:hidden flex flex-col gap-10">
-        {projects.map((p) => (
-          <div key={p.title} className="flex flex-col gap-[10px]">
+        {projects.map((p, i) => (
+          <div key={p._id} className="flex flex-col gap-[10px]">
             <div className="relative w-full aspect-[3/4] overflow-hidden">
-              <Image src={p.image} alt={p.title} fill className="object-cover" />
+              <Image src={getImageSrc(p, i)} alt={p.title} fill className="object-cover" />
               <div className="absolute bottom-4 left-4 flex gap-3">
-                {p.tags.map((tag) => (
+                {p.tags?.map((tag) => (
                   <Tag key={tag} label={tag} />
                 ))}
               </div>
@@ -158,10 +153,12 @@ export default function WorkSection() {
       <div className="hidden md:flex gap-6 items-end">
         {/* Left column */}
         <div className="flex-1 flex flex-col">
-          <ProjectCard {...projects[0]} tall />
-          <div className="mt-[117px]">
-            <ProjectCard {...projects[1]} />
-          </div>
+          {projects[0] && <ProjectCard item={projects[0]} index={0} tall />}
+          {projects[1] && (
+            <div className="mt-[117px]">
+              <ProjectCard item={projects[1]} index={1} />
+            </div>
+          )}
 
           {/* Desktop CTA */}
           <div className="flex items-stretch gap-3 mt-[117px] w-[465px]">
@@ -186,10 +183,12 @@ export default function WorkSection() {
 
         {/* Right column — offset down */}
         <div className="flex-1 flex flex-col pt-[240px]">
-          <ProjectCard {...projects[2]} />
-          <div className="mt-[117px]">
-            <ProjectCard {...projects[3]} tall />
-          </div>
+          {projects[2] && <ProjectCard item={projects[2]} index={2} />}
+          {projects[3] && (
+            <div className="mt-[117px]">
+              <ProjectCard item={projects[3]} index={3} tall />
+            </div>
+          )}
         </div>
       </div>
 
