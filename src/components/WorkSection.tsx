@@ -73,7 +73,8 @@ function ProjectCard({ item, index, tall }: {
 }
 
 export default async function WorkSection() {
-  const { data: projects } = await sanityFetch({ query: portfolioQuery });
+  const { data } = await sanityFetch({ query: portfolioQuery });
+  const projects = (data ?? []) as PortfolioItem[];
 
   return (
     <section id="projects" className="px-4 md:px-8 py-12 md:py-20">
