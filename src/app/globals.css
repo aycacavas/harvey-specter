@@ -17,3 +17,17 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans, Arial, sans-serif);
 }
+
+html {
+  scroll-padding-top: 72px;
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}

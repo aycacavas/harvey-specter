@@ -1,4 +1,6 @@
 import Image from "next/image";
+import CTAButton from "./CTAButton";
+import WorkSectionAnimations from "./WorkSectionAnimations";
 import { sanityFetch } from "@/sanity/lib/live";
 import { portfolioQuery } from "@/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
@@ -14,7 +16,7 @@ type PortfolioItem = {
 
 function ArrowIcon() {
   return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden className="-rotate-90">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
       <path
         d="M18.7235 16.0531L11.1704 8.5L8.5 11.1704L16.053 18.7235H10.2263V22.5H22.5V10.2262H18.7235V16.0531Z"
         fill="black"
@@ -54,8 +56,10 @@ function ProjectCard({ item, index, tall }: {
   const src = getImageSrc(item, index);
   return (
     <div className="flex flex-col gap-[10px]">
-      <div className={`relative w-full overflow-hidden ${tall ? "h-[744px]" : "h-[699px]"}`}>
-        <Image src={src} alt={item.title} fill className="object-cover" />
+      <div data-work-img className={`relative w-full overflow-hidden ${tall ? "h-[744px]" : "h-[699px]"}`}>
+        <div data-work-img-inner className="absolute inset-0">
+          <Image src={src} alt={item.title} fill className="object-cover" />
+        </div>
         <div className="absolute bottom-4 left-4 flex gap-3">
           {item.tags?.map((tag) => (
             <Tag key={tag} label={tag} />
@@ -66,7 +70,7 @@ function ProjectCard({ item, index, tall }: {
         <p className="font-black text-[36px] text-black uppercase leading-[1.1] tracking-[-0.04em]">
           {item.title}
         </p>
-        <ArrowIcon />
+        <div data-work-arrow><ArrowIcon /></div>
       </div>
     </div>
   );
@@ -112,8 +116,10 @@ export default async function WorkSection() {
       <div className="md:hidden flex flex-col gap-10">
         {projects.map((p, i) => (
           <div key={p._id} className="flex flex-col gap-[10px]">
-            <div className="relative w-full aspect-[3/4] overflow-hidden">
-              <Image src={getImageSrc(p, i)} alt={p.title} fill className="object-cover" />
+            <div data-work-img className="relative w-full aspect-[3/4] overflow-hidden">
+              <div data-work-img-inner className="absolute inset-0">
+                <Image src={getImageSrc(p, i)} alt={p.title} fill className="object-cover" />
+              </div>
               <div className="absolute bottom-4 left-4 flex gap-3">
                 {p.tags?.map((tag) => (
                   <Tag key={tag} label={tag} />
@@ -124,7 +130,7 @@ export default async function WorkSection() {
               <p className="font-black text-[28px] text-black uppercase leading-[1.1] tracking-[-0.04em]">
                 {p.title}
               </p>
-              <ArrowIcon />
+              <div data-work-arrow><ArrowIcon /></div>
             </div>
           </div>
         ))}
@@ -135,13 +141,11 @@ export default async function WorkSection() {
             <CornerBracket />
             <CornerBracket className="-rotate-90" />
           </div>
-          <div className="flex-1 flex flex-col gap-[10px] py-3">
+          <div className="flex-1 flex flex-col gap-4 py-3">
             <p className="italic text-base text-[#1f1f1f] leading-[1.3] tracking-[-0.04em]">
               Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
             </p>
-            <button className="self-start bg-black text-white text-sm font-medium tracking-[-0.04em] px-4 py-3 rounded-full">
-              Let&apos;s talk
-            </button>
+            <CTAButton className="self-start">Let&apos;s talk</CTAButton>
           </div>
           <div className="flex flex-col justify-between w-4 shrink-0">
             <CornerBracket className="rotate-90" />
@@ -167,13 +171,11 @@ export default async function WorkSection() {
               <CornerBracket />
               <CornerBracket className="-rotate-90" />
             </div>
-            <div className="flex-1 flex flex-col gap-[10px] py-3">
-              <p className="italic text-sm text-[#1f1f1f] leading-[1.3] tracking-[-0.04em]">
+            <div className="flex-1 flex flex-col gap-4 py-3">
+              <p className="italic text-[18px] text-[#1f1f1f] leading-[1.3] tracking-[-0.04em]">
                 Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
               </p>
-              <button className="self-start bg-black text-white text-sm font-medium tracking-[-0.04em] px-4 py-3 rounded-full">
-                Let&apos;s talk
-              </button>
+              <CTAButton className="self-start">Let&apos;s talk</CTAButton>
             </div>
             <div className="flex flex-col justify-between w-6 shrink-0">
               <CornerBracket className="rotate-90" />
@@ -193,6 +195,7 @@ export default async function WorkSection() {
         </div>
       </div>
 
+      <WorkSectionAnimations />
     </section>
   );
 }

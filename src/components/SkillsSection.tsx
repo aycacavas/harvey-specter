@@ -4,38 +4,38 @@ import { useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 
-const services = [
+const skills = [
   {
-    number: "[ 1 ]",
-    title: "Brand Discovery",
+    number: "[ 01 ]",
+    title: "Brand Identity",
     description:
-      "Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.",
+      "Placeholder description. Two to three sentences about this skill area. Explain the value you bring and the outcomes clients can expect.",
     image: "/services-1.jpg",
   },
   {
-    number: "[ 2 ]",
+    number: "[ 02 ]",
     title: "Web Design & Dev",
     description:
-      "Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.",
+      "Placeholder description. Two to three sentences about this skill area. Explain the value you bring and the outcomes clients can expect.",
     image: "/services-2.jpg",
   },
   {
-    number: "[ 3 ]",
-    title: "Marketing",
+    number: "[ 03 ]",
+    title: "Art Direction",
     description:
-      "Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.",
+      "Placeholder description. Two to three sentences about this skill area. Explain the value you bring and the outcomes clients can expect.",
     image: "/services-3.jpg",
   },
   {
-    number: "[ 4 ]",
+    number: "[ 04 ]",
     title: "Photography",
     description:
-      "Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.",
+      "Placeholder description. Two to three sentences about this skill area. Explain the value you bring and the outcomes clients can expect.",
     image: "/services-4.jpg",
   },
 ];
 
-export default function ServicesSection() {
+export default function SkillsSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function ServicesSection() {
     if (!section) return;
 
     const inners = Array.from(
-      section.querySelectorAll<HTMLElement>("[data-service-img-inner]")
+      section.querySelectorAll<HTMLElement>("[data-skill-img-inner]")
     );
 
     // Default: slightly zoomed in, dimmed, settled slightly low
@@ -52,7 +52,7 @@ export default function ServicesSection() {
     const listeners: { el: HTMLElement; enter: EventListener; leave: EventListener }[] = [];
 
     inners.forEach((inner) => {
-      const wrapper = inner.closest<HTMLElement>("[data-service-img]");
+      const wrapper = inner.closest<HTMLElement>("[data-skill-img]");
       if (!wrapper) return;
 
       const onEnter = (e: Event) => {
@@ -96,48 +96,48 @@ export default function ServicesSection() {
   return (
     <section
       ref={sectionRef}
-      id="services"
-      className="bg-black px-4 md:px-8 py-12 md:py-20 flex flex-col gap-8 md:gap-12"
+      id="skills"
+      className="bg-white px-4 md:px-8 py-12 md:py-20 flex flex-col gap-8 md:gap-12"
     >
       {/* Label */}
-      <span className="font-mono text-sm text-white uppercase">[ Services ]</span>
+      <span className="font-mono text-sm text-[#1f1f1f] uppercase">[ Skills ]</span>
 
-      {/* [4] Deliverables header */}
-      <div className="flex items-center justify-between font-light text-white uppercase tracking-[-0.08em] text-[32px] md:text-[96px] leading-none">
+      {/* [4] Expertise header */}
+      <div className="flex items-center justify-between font-light text-black uppercase tracking-[-0.08em] text-[32px] md:text-[96px] leading-none">
         <span>[4]</span>
-        <span>Deliverables</span>
+        <span>Expertise</span>
       </div>
 
-      {/* Service list */}
+      {/* Skill list */}
       <div className="flex flex-col gap-12">
-        {services.map((service) => (
-          <div key={service.number} className="flex flex-col gap-4">
+        {skills.map((skill) => (
+          <div key={skill.number} className="flex flex-col gap-4">
 
             {/* Number + divider */}
             <div className="flex flex-col gap-4">
-              <span className="font-mono text-sm text-white uppercase">{service.number}</span>
-              <div className="w-full h-px bg-white" />
+              <span className="font-mono text-sm text-[#1f1f1f] uppercase">{skill.number}</span>
+              <div className="w-full h-px bg-[#1f1f1f]" />
             </div>
 
             {/* Title + desc + image */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-8">
               <p
-                className="font-bold italic text-[36px] text-white uppercase leading-[1.1] tracking-[-0.04em] whitespace-nowrap shrink-0"
+                className="font-bold italic text-[36px] text-black uppercase leading-[1.1] tracking-[-0.04em] whitespace-nowrap shrink-0"
                 style={{ fontFamily: "var(--font-inter)" }}
               >
-                {service.title}
+                {skill.title}
               </p>
 
               <div className="flex flex-col md:flex-row gap-6 md:gap-10 md:items-start min-w-0">
-                <p className="text-base md:text-[18px] text-white leading-[1.3] tracking-[-0.04em] md:max-w-[393px] min-w-0">
-                  {service.description}
+                <p className="text-base md:text-[18px] text-[#1f1f1f] leading-[1.3] tracking-[-0.04em] md:max-w-[393px] min-w-0">
+                  {skill.description}
                 </p>
                 {/* Mobile: landscape 3:2 — Desktop: 151px square */}
-                <div data-service-img className="relative w-full aspect-[3/2] overflow-hidden md:w-[151px] md:h-[151px] md:shrink-0">
-                  <div data-service-img-inner className="absolute inset-0">
+                <div data-skill-img className="relative w-full aspect-[3/2] overflow-hidden md:w-[151px] md:h-[151px] md:shrink-0">
+                  <div data-skill-img-inner className="absolute inset-0">
                     <Image
-                      src={service.image}
-                      alt={service.title}
+                      src={skill.image}
+                      alt={skill.title}
                       fill
                       className="object-cover"
                     />

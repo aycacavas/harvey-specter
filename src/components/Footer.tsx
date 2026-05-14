@@ -1,27 +1,26 @@
+import CTAButton from "./CTAButton";
+
 export default function Footer() {
   return (
-    <footer className="bg-black">
+    <footer className="bg-black min-h-[calc(100vh-72px)] flex flex-col">
 
       {/* ── Desktop ───────────────────────────────────────────────── */}
-      <div className="hidden md:flex flex-col gap-[8.5vw] pt-12 px-8">
+      <div className="hidden md:flex flex-1 flex-col justify-between pt-12 px-8">
 
         {/* Top row: CTA · social centre · social right + divider */}
         <div className="flex flex-col gap-12">
           <div className="flex items-start justify-between">
 
             {/* CTA */}
-            <div className="flex flex-col gap-3 w-[298px]">
+            <div className="flex flex-col gap-8 w-[298px]">
               <p className="font-light italic text-[24px] text-white uppercase tracking-[-0.04em] leading-[1.1]">
                 Have a{" "}
                 <span className="font-black not-italic">project</span>
                 {" "}in mind?
               </p>
-              <a
-                href="#"
-                className="self-start border border-white rounded-full px-4 py-3 text-[14px] font-medium text-white tracking-[-0.04em] leading-none"
-              >
+              <CTAButton href="#" variant="outline" className="self-start">
                 Let&apos;s talk
-              </a>
+              </CTAButton>
             </div>
 
             {/* Social centre */}
@@ -67,11 +66,11 @@ export default function Footer() {
       </div>
 
       {/* ── Mobile ────────────────────────────────────────────────── */}
-      <div className="md:hidden flex flex-col gap-12 pt-12 px-4">
+      <div className="md:hidden flex flex-1 flex-col justify-between pt-12 px-4 pb-0">
 
         {/* CTA + social links + divider */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8">
             <p className="font-light italic text-[24px] text-white uppercase tracking-[-0.04em] leading-[1.1]">
               Have a{" "}
               <span className="font-black not-italic">project</span>
@@ -79,7 +78,7 @@ export default function Footer() {
             </p>
             <a
               href="#"
-              className="self-start border border-white rounded-full px-4 py-3 text-[14px] font-medium text-white tracking-[-0.04em] leading-none"
+              className="self-start border border-white rounded-full px-6 py-3 text-[14px] font-medium text-white tracking-[-0.04em] leading-none"
             >
               Let&apos;s talk
             </a>
